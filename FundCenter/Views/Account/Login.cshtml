@@ -1,0 +1,125 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6 ielt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7 ielt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>Paper Stack</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/login.css" />
+</head>
+<body>
+    <div class="container">
+        <section id="content">
+            <form action="">
+                <h1>Login Form</h1>
+                <div>
+                    <input type="text" placeholder="Username" required="" id="username" />
+                </div>
+                <div>
+                    <input type="password" placeholder="Password" required="" id="password" />
+                </div>
+                <div>
+                    <input type="button" id="login-button" value="Log in" />
+                    <a href="#">Lost your password?</a>
+                    <a href="#">Register</a>
+                </div>
+                <div>
+                    <span class="error-msg" id="login-error"></span>
+                </div>
+            </form><!-- form -->
+        </section><!-- content -->
+    </div><!-- container -->
+    <script type="text/javascript">
+        window.onload = function () {
+            document.getElementById("login-button").onclick = doLogin;
+            document.getElementById("password").onkeypress = function (e) {
+                if (e && e.keyCode == 13) {
+                    doLogin();
+                }
+            }
+            function doLogin() {
+                var userName = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+
+                if (userName.length == 0 || password.length == 0) {
+                    return;
+                }
+
+                var timeZone = new Date().getTimezoneOffset();
+                var ajaxUrl = "/Account/Login";
+                jsonData = JSON.stringify({
+                    "userName": userName,
+                    "password": password
+                });
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", ajaxUrl);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                xhr.setRequestHeader('TimeZone', timeZone);
+
+                xhr.timeout = 6000;
+                xhr.ontimeout = function (e) {
+
+                    return;
+                };
+
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        if (this.status == 200 || this.status == 302) {
+                            var result = JSON.parse(this.responseText);
+                            if (!!result && result > 0) {
+                                sessionStorage.setItem("userId", result);
+                                location.href = '/Home/index';
+                            } else if (result == -1) {
+                                // User Name is invalid
+                                document.getElementById("login-error").innerText = "User Name is invalid";
+                            } else {
+                                // Password is invalid
+                                document.getElementById("login-error").innerText = "Password is invalid";
+                            }
+                        }
+
+                    } else {
+                        if (this.status == 404) {
+
+                        }
+
+                        try {
+                            if (isJson(JSON.parse(this.responseText).Message)) {
+                                var resultCode = JSON.parse(JSON.parse(this.responseText).Message).exceptionCode;
+
+                            }
+
+                            if (!isJson(this.responseText)) {
+
+                            }
+                        } catch (e) {
+
+                        }
+                    }
+                };
+
+                xhr.onerror = function (e) {
+                };
+                xhr.send(jsonData);
+            }
+
+            function isJson(content) {
+                try {
+                    JSON.parse(content);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

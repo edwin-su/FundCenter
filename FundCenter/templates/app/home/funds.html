@@ -1,0 +1,66 @@
+﻿<div class="section-main">
+    <header class="funds-header">
+        <section>
+            <input type="tel" placeholder="Fund number." data-bind="value:searchFundNumber, event:{keypress:searchFund()}" maxlength="6" />
+            <input type="button" data-bind="click:searchFund" value="Search" />
+        </section>
+            
+    </header>
+    <section style="border: 1px dashed black" data-bind="style:{display: (searchFundResult() == null ? 'none' : 'block')}">
+        <!--ko with: searchFundResult() -->
+        <table class="fund-add-info">
+            <tr>
+                <td>Fund name: </td>
+                <td><input type="text" data-bind="value:FundName" readonly /></td>
+            </tr>
+            <tr>
+                <td>Owned value: </td>
+                <td><input type="text" data-bind="value:OwnedValue" /></td>
+            </tr>
+            <tr>
+                <td>Current change value: </td>
+                <td><input type="text" data-bind="value:CurrentChangeValue" readonly /></td>
+            </tr>
+            <tr>
+                <td>Last refresh time: </td>
+                <td><input type="text" data-bind="value:LastRefreshTime" readonly /></td>
+                <td>
+                    <input type="button" id="fund-add-button" data-bind="event:{click:$parent.addFundInList.bind($data)}" value="Add" />
+                </td>
+            </tr>
+        </table>
+        <!-- /ko-->
+    </section>
+    <section>
+        <table class="funds-table" cellpadding="6" cellspacing="10" border="0">
+            <thead>
+                <tr>
+                    <th>Fund number</th>
+                    <th>Fund name</th>
+                    <th>Owned value</th>
+                    <th>Current change value</th>
+                    <th>Last refresh time</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--ko foreach:funds-->
+                <tr>
+                    <td data-bind="text:FundNumber"></td>
+                    <td data-bind="text:FundName"></td>
+                    <td data-bind="text:OwnedValue"></td>
+                    <td data-bind="text:CurrentChangeValue"></td>
+                    <td data-bind="text:LastRefreshTime"></td>
+                    <td>
+                        <input type="button" value="History" data-bind="click:$parent.showHistory.bind($data)" />
+                        <input type="button" value="Delete" />
+                    </td>
+                </tr>
+                <!--/ko-->
+            </tbody>
+    </table>
+    </section>
+    <section>
+        <canvas id="myChart"></canvas>
+    </section>
+</div>

@@ -1,0 +1,85 @@
+﻿aside{
+    display:inline-block;
+}
+@media only screen and (min-width: 769px) {
+    #body {
+        margin: 60px 10px 10px 250px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #body {
+        margin: 460px 0 0 0;
+    }
+}
+
+.funds-table thead tr {
+    background-color: #F5F5F5;
+}
+.section-main{
+    margin: 30px auto 0 auto;
+    width: 800px;
+}
+.funds-table{
+    border-spacing:10px 10px;
+    border-collapse: separate;
+}
+.funds-table th{
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 15px;
+}
+.funds-table td{
+    text-align: center
+}
+.funds-header input[type="tel"]{
+    width: 220px;
+    height: 30px;
+    border-radius: 5px;
+    margin: auto 70px;
+    text-align:center;
+}
+.funds-header input[type="text"]{
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    margin: auto 10px;
+    text-align:center;
+}
+.funds-header{
+    height: 40px;
+}
+
+.funds-header section{
+    width: 500px;
+    margin: 0 auto;
+}
+.fund-add-info{
+    width:500px;
+    margin:10px auto;
+}
+
+input[type=button]{
+    border-radius: 5px;
+    min-width: 120px;
+    height: 30px;
+}
+
+input[type=button]:hover{
+    background-color: lightblue;
+}
+
+.test-a:before{
+    content: 'hello world : ';
+}
+
+.hello {
+    display: inline-block;
+    width: 90px;
+    height: 60px;
+    background-repeat: no-repeat;
+    background-image: url(../img/weather.jpg);
+    background-position: 0 0;
+    background-size: 450px 360px;
+    text-indent: -99999em;
+}
